@@ -1,0 +1,36 @@
+version: '3.8'
+# This file orchestrates the two main services: the .NET API and the Angular client.
+
+services:
+
+  # 1. API Service (ASP.NET Core VSA Backend)
+  api:
+    build:
+      # Context points to the folder containing the Dockerfile and source code
+      context: ./src/server 
+      dockerfile: Dockerfile
+    container_name: inventicloud-api
+    # Expose port 8080 internally, as configured in the .NET Dockerfile
+    expose:
+      - "8080"
+    # Map the internal port to an external port for local testing (e.g., Swagger access)
+    ports:
+      - "8088:8080"
+    environment:
+      # Kestrel must listen on the Docker-wide address
+      ASPNETCORE_URLS: http://+:8080
+      ASPNETCORE_ENVIRONMENT: Production
+
+  # 2. Client Service (Angular Frontend served by Nginx)
+  client:
+    build:
+      # Context points to the folder containing the Angular source and Dockerfile
+      context: ./src/client
+      dockerfile: Dockerfile
+    container_name: inventicloud-client
+    # Map external host port 80 to container port 80 (access via http://localhost)
+    ports:
+      - "80:80"
+    # Ensure the API service is running before the Nginx proxy starts
+    depends_on:
+      - api
