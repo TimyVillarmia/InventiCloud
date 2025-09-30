@@ -40,12 +40,3 @@ For the original implementation, please see the old repo:
 ## 📖 About
 InventiCloud is a cloud-based inventory management system designed to help multi-branch businesses centralize real-time stock tracking and streamline operations. This project originated as a .NET Blazor application and has been refactored into an Angular frontend with a .NET API backend to improve scalability and maintainability.
 
----
-
-## ⚡ Contributing
-Currently, this is a **private refactor**. External contributions are not open until stabilization.  
-
----
-
-## 📜 License
-MIT License © 2025 Timy Villarmia
